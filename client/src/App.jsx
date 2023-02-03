@@ -1,26 +1,42 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import PokeList from './PokeList'
 
 function App() {
+  const [loading, setLoading] = useState(false)
+  const [pokeData, setPokeData] = useState([])
 
   useEffect(() => {
-    fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+    fetchData()
+  }, [])
+
+  const fetchData = () => {
+    setLoading(true)
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=10')
     .then(res => {
       return res.json()
     })
     .then(data => {
-      console.log(data)
+      setPokeData(data.results)
+      setLoading(false)
     })
     .catch(e => {
       console.log(e)
+      setLoading(false)
     })
-  })
+  }
 
   return (
-    <div className="App">
-      Hello World
-    </div>
+    <>
+      {loading ? (
+        <div> ... Loading ... </div>
+      ) : (
+        <div className="App">
+          <PokeList pokeData={pokeData} />
+        </div>
+      )}
+    </>
   )
 }
 
