@@ -16,13 +16,14 @@ const Pokemon = ({name, url}) => {
     .catch(e => console.log(e))
   }
 
-  return (
-    <div>
-      {name}
-      <img src = {data.sprites.front_default} />
-    </div>
-
-  )
+  if (data) {
+    return (
+      <div>
+        {name}
+        <img src = {data.sprites.front_default} />
+      </div>
+    )
+  }
 }
 
 export default Pokemon
