@@ -7,7 +7,7 @@ const PokeList = ({pokeData}) => {
       <div>
         {pokeData.map((poke, index) => {
           return (
-            <Pokemon key={index} name={poke.name}/>
+            <Pokemon key={index} name={poke.name} url={poke.url}/>
           )
         })}
       </div>
