@@ -10,9 +10,11 @@ const Pokemon = ({name, url}) => {
   }, [])
 
   const fetchData = () => {
-    fetch(url)
-    .then(res => res.json())
-    .then(data => setData(data))
+    // fetch(url)
+    fetch('/pokemon')
+    // .then(res => res.json())
+    .then(data => console.log('hi'))
+    // .then(data => setData(data))
     .catch(e => console.log(e))
   }
 
