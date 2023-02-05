@@ -10,8 +10,10 @@ function App() {
     fetchData()
   }, [])
 
-  const fetchData = () => {
+  const fetchData = async () => {
     setLoading(true)
+
+    /* client-side request:
     fetch('https://pokeapi.co/api/v2/pokemon?limit=10')
     .then(res => {
       return res.json()
@@ -24,6 +26,19 @@ function App() {
       console.log(e)
       setLoading(false)
     })
+    */
+
+    // server-side request - helps with CORS if API key is involved in API_URL
+    try {
+      const api_url = `http://localhost:9000/pokemon`
+      const response = await fetch(api_url)
+      const json = await response.json()
+      console.log(json.results)
+      setPokeData(json.results)
+      setLoading(false)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
