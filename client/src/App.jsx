@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import PokeList from './PokeList'
 import Pagination from './Pagination'
+import Search from './Search'
 
 function App() {
   const [loading, setLoading] = useState(false)
   const [pokeData, setPokeData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(4)
+  const [postsPerPage, setPostsPerPage] = useState(5)
 
   useEffect(() => {
     fetchData()
@@ -37,7 +38,7 @@ function App() {
 
     // server-side request - helps with CORS if API key is involved in API_URL
     try {
-      const limit = 10
+      const limit = 20
       const api_url = `http://localhost:9000/pokemon/${limit}`
       const response = await fetch(api_url)
       const json = await response.json()
@@ -51,7 +52,7 @@ function App() {
   return (
     <>
       {loading ? (
-        <div> ... Loading ... </div>
+        <div> Loading... </div>
       ) : (
         <div className="App">
           <PokeList pokeData={currentPosts} />
@@ -60,6 +61,7 @@ function App() {
           postsPerPage={postsPerPage}
           setCurrentPage={setCurrentPage}
           />
+          <Search/>
         </div>
       )}
     </>

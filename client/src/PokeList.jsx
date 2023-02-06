@@ -4,10 +4,10 @@ import Pokemon from './Pokemon'
 const PokeList = ({pokeData}) => {
   if (pokeData) {
     return (
-      <div>
+      <div className="container">
         {pokeData.map((poke, index) => {
           return (
-            <Pokemon key={index} name={poke.name} url={poke.url}/>
+            <Pokemon className="card"key={index} name={poke.name} url={poke.url}/>
           )
         })}
       </div>
