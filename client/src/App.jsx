@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import PokeList from './PokeList'
+import Pagination from './Pagination'
 
 function App() {
   const [loading, setLoading] = useState(false)
   const [pokeData, setPokeData] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postsPerPage, setPostsPerPage] = useState(4)
 
   useEffect(() => {
     fetchData()
   }, [])
+
+  const lastPostIndex = currentPage * postsPerPage
+  const firstPostIndex = lastPostIndex - postsPerPage
+  const currentPosts = pokeData.slice(firstPostIndex, lastPostIndex)
 
   const fetchData = async () => {
     setLoading(true)
@@ -47,7 +54,12 @@ function App() {
         <div> ... Loading ... </div>
       ) : (
         <div className="App">
-          <PokeList pokeData={pokeData} />
+          <PokeList pokeData={currentPosts} />
+          <Pagination
+          totalPosts={pokeData.length}
+          postsPerPage={postsPerPage}
+          setCurrentPage={setCurrentPage}
+          />
         </div>
       )}
     </>

@@ -7,16 +7,16 @@ const Pokemon = ({name, url}) => {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [data])
 
-  const fetchData = () => {
-    fetch(url)
+  const fetchData = async () => {
+    await fetch(url)
     .then(res => res.json())
     .then(data => setData(data))
     .catch(e => console.log(e))
   }
 
-  if (data) {
+  if (data && data.sprites.front_default) {
     return (
       <div>
         {name}
