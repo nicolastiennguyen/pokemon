@@ -14,8 +14,9 @@ app.use((req, res, next) => {
 
 
 // server-side request
-app.get('/pokemon', async (req, res) => {
-  const URL = `https://pokeapi.co/api/v2/pokemon?limit=10`
+app.get('/pokemon/:limit', async (req, res) => {
+  const limit = req.params.limit
+  const URL = `https://pokeapi.co/api/v2/pokemon?limit=${limit}`
   const fetch_res = await fetch(URL)
   const json = await fetch_res.json()
   res.send(json)

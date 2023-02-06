@@ -37,10 +37,10 @@ function App() {
 
     // server-side request - helps with CORS if API key is involved in API_URL
     try {
-      const api_url = `http://localhost:9000/pokemon`
+      const limit = 10
+      const api_url = `http://localhost:9000/pokemon/${limit}`
       const response = await fetch(api_url)
       const json = await response.json()
-      console.log(json.results)
       setPokeData(json.results)
       setLoading(false)
     } catch (e) {
