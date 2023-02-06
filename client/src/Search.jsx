@@ -4,6 +4,7 @@ const Search = () => {
 
   const [searchInput, setSearchInput] = useState('')
   const [searchedPokemonData, setSearchedPokemonData] = useState('')
+  const [status, setStatus] = useState('Loading your Pokemon...')
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -17,7 +18,7 @@ const Search = () => {
     .then((data) => setSearchedPokemonData(data))
     .catch((err) => {
       console.log(err)
-      setSearchedPokemonData('')
+      setStatus('Try again.')
     })
   }
 
@@ -29,7 +30,7 @@ const Search = () => {
       </form>
       <>
         {searchedPokemonData && searchedPokemonData.sprites.front_default ?
-        <img src={searchedPokemonData.sprites.front_default} /> : <div> Loading... </div>}
+        <img src={searchedPokemonData.sprites.front_default} /> : <div> {status} </div>}
       </>
     </div>
   )
