@@ -19,7 +19,6 @@ app.get('/pokemon', async (req, res) => {
   const fetch_res = await fetch(URL)
   const json = await fetch_res.json()
   res.send(json)
-  console.log('working')
 })
 
 let PORT = 9000
