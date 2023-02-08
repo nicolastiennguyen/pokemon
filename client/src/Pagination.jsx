@@ -1,13 +1,10 @@
 import React from 'react'
 
 const Pagination = ({totalPosts, postsPerPage, setCurrentPage}) => {
-
-  let pages = []
-
+  const pages = []
   for (let i = 1; i <= Math.ceil(totalPosts/postsPerPage); i++) {
     pages.push(i)
   }
-
   return (
     <div>
       {

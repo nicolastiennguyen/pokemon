@@ -83,6 +83,7 @@ button:focus-visible {
   justify-content: center;
 }
 
-.card {
-
+.memeImg {
+  width: 200px;
+  height: 200px;
 }

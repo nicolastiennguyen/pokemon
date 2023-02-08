@@ -1,90 +1,44 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
-import PokeList from './PokeList'
 import Pagination from './Pagination'
-import Search from './Search'
 
 function App() {
-  const [loading, setLoading] = useState(false)
-  const [pokeData, setPokeData] = useState([])
+  const [memes, setMemes] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage, setPostsPerPage] = useState(5)
-  const [search, setSearch] = useState('')
-  const [filtered, setFiltered] = useState('')
 
+  const lastPageIndex = currentPage * postsPerPage
+  const firstPageIndex = lastPageIndex - postsPerPage
+  const currentPosts = memes.slice(firstPageIndex, lastPageIndex)
+
+  // useEffect takes in two arguments
+  // the first argument is the effect itself
+  // and the second argument is the array of dependencies on which the effects depend on
   useEffect(() => {
     fetchData()
   }, [])
 
-  const lastPostIndex = currentPage * postsPerPage
-  const firstPostIndex = lastPostIndex - postsPerPage
-  const currentPosts = pokeData.slice(firstPostIndex, lastPostIndex)
-
   const fetchData = async () => {
-    setLoading(true)
-
-    /* client-side request:
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=10')
-    .then(res => {
-      return res.json()
-    })
-    .then(data => {
-      setPokeData(data.results)
-      setLoading(false)
-    })
-    .catch(e => {
-      console.log(e)
-      setLoading(false)
-    })
-    */
-
-    // server-side request - helps with CORS if API key is involved in API_URL
-    try {
-      const limit = 20
-      const api_url = `http://localhost:9000/pokemon/${limit}`
-      const response = await fetch(api_url)
-      const json = await response.json()
-      setPokeData(json.results)
-      setLoading(false)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  const handleChange = (e) => {
-    e.preventDefault()
-    setSearch(e.target.value)
-    const pokemonNames = []
-    for (let i = 0 ; i < currentPosts.length; i++) {
-      pokemonNames.push(currentPosts[i].name)
-    }
-    let filteredPokemon = pokemonNames.filter((pokemon) => {
-      return pokemon.toLowerCase().includes(e.target.value.toLowerCase())
-    })
-    setFiltered(filteredPokemon.toString().split(''))
-    if (e.target.value === '') {
-      setFiltered('')
-    }
+    await fetch(`https://api.imgflip.com/get_memes`)
+    .then((response) => response.json())
+    .then((json) => setMemes(json.data.memes))
+    .catch((error) => console.log('error fetching data from API', error))
   }
 
   return (
-    <>
-      {loading ? (
-        <div> Loading... </div>
-      ) : (
-        <div className="App">
-          <input type="text" onChange={handleChange}/>
-          Here's your filtered pokemon: {filtered}
-          <PokeList pokeData={currentPosts} />
-          <Pagination
-          totalPosts={pokeData.length}
-          postsPerPage={postsPerPage}
-          setCurrentPage={setCurrentPage}
-          />
-          <Search/>
-        </div>
-      )}
-    </>
+    <div className="App">
+      {memes ?
+        currentPosts.map((meme, index) => {
+          return <img key={index} src={meme.url} className="memeImg"/>
+        })
+        : null
+      }
+      <Pagination
+        totalPosts={memes.length}
+        postsPerPage={postsPerPage}
+        setCurrentPage={setCurrentPage}
+      />
+    </div>
   )
 }
 
