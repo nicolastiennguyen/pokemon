@@ -9,6 +9,8 @@ function App() {
   const [pokeData, setPokeData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage, setPostsPerPage] = useState(5)
+  const [search, setSearch] = useState('')
+  const [filtered, setFiltered] = useState('')
 
   useEffect(() => {
     fetchData()
@@ -49,12 +51,30 @@ function App() {
     }
   }
 
+  const handleChange = (e) => {
+    e.preventDefault()
+    setSearch(e.target.value)
+    const pokemonNames = []
+    for (let i = 0 ; i < currentPosts.length; i++) {
+      pokemonNames.push(currentPosts[i].name)
+    }
+    let filteredPokemon = pokemonNames.filter((pokemon) => {
+      return pokemon.toLowerCase().includes(e.target.value.toLowerCase())
+    })
+    setFiltered(filteredPokemon.toString().split(''))
+    if (e.target.value === '') {
+      setFiltered('')
+    }
+  }
+
   return (
     <>
       {loading ? (
         <div> Loading... </div>
       ) : (
         <div className="App">
+          <input type="text" onChange={handleChange}/>
+          Here's your filtered pokemon: {filtered}
           <PokeList pokeData={currentPosts} />
           <Pagination
           totalPosts={pokeData.length}
