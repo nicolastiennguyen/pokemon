@@ -34,9 +34,9 @@ function App() {
         : null
       }
       <Pagination
-        totalPosts={memes.length}
-        postsPerPage={postsPerPage}
-        setCurrentPage={setCurrentPage}
+      totalPosts={memes.length}
+      postsPerPage={postsPerPage}
+      setCurrentPage={setCurrentPage}
       />
     </div>
   )
