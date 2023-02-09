@@ -38,7 +38,7 @@ function App() {
     })
     */
 
-    // server-side request - helps with CORS if API key is involved in API_URL
+    // server-side request - helps with CORS if API key is involved in API's URL
     try {
       const limit = 20
       const api_url = `http://localhost:9000/pokemon/${limit}`
