@@ -1,4 +1,4 @@
 # pokemon
 
 ## About
-Testing!!!
+Full-Stack practice using Pokemon's API.
