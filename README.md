@@ -1,4 +1,4 @@
 # pokemon
 
 ## About
-Full-Stack practice using Pokemon's API.
+Full-Stack practice using https://pokeapi.co/.
